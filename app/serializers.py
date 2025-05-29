@@ -29,7 +29,7 @@ class TaskSerializer(serializers.ModelSerializer):
         return instance
 
     def validate(self, data):
-        if data['due_data'] and data['due_data'] < timezone.now().date():
+        if data.get('due_data') and data['due_data'] < timezone.now().date():
             raise serializers.ValidationError("Due Data Cannot be in the past")
         return data
 
@@ -37,7 +37,7 @@ class TaskSerializer(serializers.ModelSerializer):
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
-        fields = 'name'
+        fields = ['name']
 
 
 class TaskAssignmentSerializer(serializers.ModelSerializer):
@@ -46,7 +46,7 @@ class TaskAssignmentSerializer(serializers.ModelSerializer):
         fields = ['task', 'user', 'assign_at']
 
     def validate(self, data):
-        if data['assign_at'] and data['assign_at'] < timezone.now().date():
+        if data.get('assign_at') and data['assign_at'] < timezone.now().date():
             raise serializers.ValidationError("Assign Data Cannot be in the past")
         return data
 
