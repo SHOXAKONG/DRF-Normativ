@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'django_celery_beat',
     'celery',
     'channels',
-    'notification'
+    'notification',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -170,13 +171,23 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 1800
 CELERY_TIMEZONE = 'Asia/Tashkent'
-CELERY_BEAT_SCHEDULER ='django_celery_beat.schedulers.DatabaseScheduler'
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler'
 
 CHANNEL_LAYERS = {
-    'default' : {
-        "BACKEND" : 'channels_redis.core.RedisChannelLayer',
-        'CONFIG' : {
-            "hosts" : [('127.0.0.1', 6379)]
+    'default': {
+        "BACKEND": 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)]
+        }
+    }
+}
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
         }
     }
 }
